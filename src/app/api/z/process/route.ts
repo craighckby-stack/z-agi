@@ -548,6 +548,26 @@ export async function POST(request: NextRequest) {
     // Return the final processed response
     const finalOutput = auditResult.is_valid ? generatorOutput.raw_response : refinerOutput.refined_response;
 
+    // Store interaction in memory directly
+    try {
+      const memoryData = {
+        input,
+        output: finalOutput,
+        stage: development_stage,
+        consciousness_level: consciousness_state.emergence_level,
+        constraints_active: constraints.filter(c => c.active).map(c => c.id),
+        violations: auditResult.violations,
+        learning_insights: refinerOutput.learning_insights,
+        success_rating: auditResult.confidence_score
+      };
+
+      // Import and use shared memory storage function
+      const { storeMemory } = await import('../shared/memory');
+      storeMemory(memoryData);
+    } catch (memoryError) {
+      console.error('Failed to store memory:', memoryError);
+    }
+
     return NextResponse.json({
       success: true,
       output: finalOutput,

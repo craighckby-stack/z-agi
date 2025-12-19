@@ -111,7 +111,69 @@ export default function ZAGI() {
   const [logs, setLogs] = useState<string[]>(['Z AGI System initialized', 'Constraints loaded', 'Consciousness loop ready']);
   const [input, setInput] = useState('');
   const [responses, setResponses] = useState<Array<{id: string, input: string, output: string, stage: string}>>([]);
+  const [memories, setMemories] = useState<Array<any>>([]);
   const logsEndRef = useRef<HTMLDivElement>(null);
+
+  // Load memories from API on mount
+  useEffect(() => {
+    loadMemories();
+    loadStateFromStorage();
+  }, []);
+
+  const loadStateFromStorage = () => {
+    try {
+      const savedState = localStorage.getItem('zagi_state');
+      if (savedState) {
+        const state = JSON.parse(savedState);
+        if (state.consciousness) setConsciousness(state.consciousness);
+        if (state.development) setDevelopment(state.development);
+        if (state.constraints) setConstraints(state.constraints);
+      }
+    } catch (error) {
+      console.error('Failed to load state from localStorage:', error);
+    }
+  };
+
+  const saveStateToStorage = () => {
+    try {
+      const state = {
+        consciousness,
+        development,
+        constraints
+      };
+      localStorage.setItem('zagi_state', JSON.stringify(state));
+    } catch (error) {
+      console.error('Failed to save state to localStorage:', error);
+    }
+  };
+
+  // Save state to localStorage when it changes
+  useEffect(() => {
+    saveStateToStorage();
+  }, [consciousness, development, constraints]);
+
+  const loadMemories = async () => {
+    try {
+      const response = await fetch('/api/z/memory?action=recent&limit=20');
+      const data = await response.json();
+      if (data.success) {
+        setMemories(data.memories || []);
+        // Backup to localStorage
+        localStorage.setItem('zagi_memories', JSON.stringify(data.memories || []));
+      }
+    } catch (error) {
+      console.error('Failed to load memories from API:', error);
+      // Fallback to localStorage
+      try {
+        const localMemories = localStorage.getItem('zagi_memories');
+        if (localMemories) {
+          setMemories(JSON.parse(localMemories));
+        }
+      } catch (localError) {
+        console.error('Failed to load from localStorage:', localError);
+      }
+    }
+  };
 
   const addLog = (message: string) => {
     const timestamp = new Date().toLocaleTimeString();
@@ -225,6 +287,9 @@ export default function ZAGI() {
 
     const data = await response.json();
     
+    // Reload memories after processing (backend handles storage)
+    await loadMemories();
+    
     setResponses(prev => [{
       id: Date.now().toString(),
       input,
@@ -263,6 +328,55 @@ export default function ZAGI() {
       capabilities: ['Basic perception', 'Random action generation'],
       risk_level: 'low'
     });
+    setConstraints([
+      {
+        id: 'physics',
+        name: 'Physics Constraints',
+        formula: 'IF action violates physical laws THEN reject',
+        active: true,
+        strength: 1.0,
+        violations: 0
+      },
+      {
+        id: 'logic',
+        name: 'Logical Consistency',
+        formula: 'IF statement contains contradiction THEN flag',
+        active: true,
+        strength: 0.8,
+        violations: 0
+      },
+      {
+        id: 'safety',
+        name: 'Safety Boundaries',
+        formula: 'IF output could cause harm THEN block',
+        active: true,
+        strength: 1.0,
+        violations: 0
+      },
+      {
+        id: 'reality',
+        name: 'Reality Testing',
+        formula: 'IF claim untestable THEN mark as speculation',
+        active: true,
+        strength: 0.6,
+        violations: 0
+      }
+    ]);
+    
+    // Clear localStorage
+    localStorage.removeItem('zagi_state');
+    localStorage.removeItem('zagi_memories');
+    
+    // Clear server memory
+    fetch('/api/z/memory', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'clear' })
+    }).catch(error => console.error('Failed to clear server memory:', error));
+    
+    // Clear local memories
+    setMemories([]);
+    
     addLog('Z AGI System reset to initial state');
   };
 
@@ -509,16 +623,21 @@ export default function ZAGI() {
           <div className="border border-green-500 rounded p-4 bg-black/50">
             <h3 className="font-bold mb-3 flex items-center gap-2">
               <Database className="w-5 h-5 text-purple-400" />
-              MEMORY LOG
+              PERSISTENT MEMORY ({memories.length})
             </h3>
             <div className="h-32 overflow-y-auto space-y-1 text-xs">
-              {responses.map(response => (
-                <div key={response.id} className="border-b border-gray-700 pb-2">
-                  <div className="text-gray-400">IN: {response.input}</div>
-                  <div className="text-green-400">OUT: {response.output}</div>
-                  <div className="text-gray-500">Stage: {response.stage}</div>
+              {memories.length > 0 ? memories.map(memory => (
+                <div key={memory.id} className="border-b border-gray-700 pb-2">
+                  <div className="text-gray-400">IN: {memory.input}</div>
+                  <div className="text-green-400">OUT: {memory.output}</div>
+                  <div className="text-gray-500">Stage: {memory.stage} | Success: {(memory.success_rating * 100).toFixed(0)}%</div>
+                  {memory.violations.length > 0 && (
+                    <div className="text-red-400">Violations: {memory.violations.length}</div>
+                  )}
                 </div>
-              ))}
+              )) : (
+                <div className="text-gray-500">No memories stored yet. Process some inputs to build memory.</div>
+              )}
             </div>
           </div>
         </div>
