@@ -10,7 +10,13 @@
     "db:push": "prisma db push",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
-    "db:reset": "prisma migrate reset"
+    "db:reset": "prisma migrate reset",
+    "experiments:validate": "bun experiments/constraint-learning/implementation/validate-setup.ts",
+    "experiments:run": "bun experiments/constraint-learning/implementation/run-experiment.ts",
+    "experiments:analyze": "bun experiments/constraint-learning/implementation/analyze-results.ts",
+    "experiments:pilot": "bun experiments/constraint-learning/implementation/run-pilot.ts",
+    "type-check": "tsc --noEmit",
+    "test": "bun run type-check && bun run lint"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

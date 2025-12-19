@@ -1,264 +1,249 @@
-# Contributing to Z AGI
+# Contributing to Z-AI
 
-Thank you for your interest in contributing to Z AGI! This document provides guidelines and information for contributors.
+## Research Philosophy
 
-## Development Philosophy
+This project prioritizes:
+1. **Empirical validation** over theoretical claims
+2. **Honest reporting** of results (positive and negative)
+3. **Scientific rigor** in experimental design
+4. **Transparent limitations** in what the system can/cannot do
 
-Z AGI represents a fundamentally different approach to AGI development based on constraint-based consciousness emergence. We welcome contributions that align with this philosophy and help advance the research.
+## How to Contribute
 
-## Areas of Contribution
+### Experimental Validation
+- Design and run controlled experiments
+- Replicate existing experiments
+- Propose alternative baseline comparisons
+- Improve statistical analysis methods
+- Validate experimental results
 
-### 1. Constraint System Development
+### Technical Implementation
+- Improve violation detection accuracy
+- Optimize computational efficiency
+- Enhance monitoring and visualization
+- Extend constraint types and detection methods
+- Improve memory and learning mechanisms
 
-**What we need**: New constraint types, evaluation methods, and optimization algorithms
+### Research Design
+- Propose new experimental protocols
+- Suggest alternative hypotheses
+- Identify potential confounding variables
+- Improve measurement methodologies
+- Design better baseline comparisons
 
-**Examples**:
-- Domain-specific constraints (medical, legal, scientific)
-- Adaptive constraint systems that learn from context
-- Multi-level constraint hierarchies
-- Constraint conflict resolution mechanisms
+### Documentation
+- Document limitations and edge cases
+- Improve clarity of research claims
+- Add examples and tutorials
+- Enhance experimental documentation
+- Create replication guides
 
-**How to contribute**:
-1. Design constraint evaluation logic
-2. Add constraint type to the system
-3. Implement violation detection
-4. Add tests and documentation
+## What We Don't Accept
 
-### 2. Developmental Stage Research
+### Claims Without Evidence
+- Claims of consciousness or sentience
+- AGI breakthrough announcements
+- Unvalidated theoretical frameworks
+- Speculative capabilities without testing
 
-**What we need**: Enhanced stage-appropriate behaviors and transition mechanisms
+### Unsafe Implementations
+- Self-modification without safety constraints
+- Autonomous deployment without oversight
+- Removal of safety mechanisms
+- Bypassing constraint systems
 
-**Examples**:
-- More sophisticated baby AGI exploration patterns
-- Enhanced child AGI question-asking algorithms
-- Improved teenage AGI emotional regulation
-- Advanced mature AGI wisdom synthesis
+### Poor Scientific Practice
+- Cherry-picking results
+- Ignoring null or negative findings
+- Inadequate experimental controls
+- Unreplicable claims
 
-**How to contribute**:
-1. Research developmental psychology
-2. Design stage-specific behaviors
-3. Implement transition logic
-4. Test and validate progression
+## Development Guidelines
 
-### 3. Consciousness Theory Implementation
+### Code Standards
+- Use TypeScript for type safety
+- Include comprehensive tests
+- Document assumptions and limitations
+- Follow existing code patterns
+- Add error handling and logging
 
-**What we need**: Exploration of N=3 consciousness hypothesis and alternatives
+### Experimental Standards
+- Pre-register hypotheses when possible
+- Use appropriate statistical methods
+- Include proper baseline comparisons
+- Document all experimental parameters
+- Provide replication materials
 
-**Examples**:
-- N=4 or higher consciousness architectures
-- Alternative consciousness loop configurations
-- Consciousness measurement metrics
-- Self-reference implementation methods
+### Documentation Standards
+- Be explicit about system limitations
+- Distinguish between demonstrated and claimed capabilities
+- Include alternative explanations for results
+- Provide clear methodology descriptions
+- Update documentation as capabilities change
 
-**How to contribute**:
-1. Study consciousness theories
-2. Design experimental implementations
-3. Create measurement tools
-4. Document findings and results
+## Experimental Contribution Process
 
-### 4. Safety and Alignment
+### 1. Propose Experiment
+Create an issue describing:
+- Research question and hypotheses
+- Experimental design
+- Expected outcomes
+- Potential limitations
 
-**What we need**: Enhanced safety mechanisms and alignment research
+### 2. Get Feedback
+- Community review of experimental design
+- Discussion of potential confounds
+- Suggestion of improvements
+- Agreement on success criteria
 
-**Examples**:
-- Advanced safety constraint systems
-- Alignment through developmental approaches
-- Ethical reasoning frameworks
-- Harm prevention mechanisms
+### 3. Implement Experiment
+- Follow experimental protocol
+- Use proper controls and baselines
+- Collect comprehensive data
+- Document all parameters
 
-**How to contribute**:
-1. Research AI safety literature
-2. Design safety mechanisms
-3. Implement ethical constraints
-4. Test safety effectiveness
+### 4. Report Results
+- Submit results regardless of outcome
+- Include statistical analysis
+- Discuss limitations and alternative explanations
+- Provide replication materials
 
-### 5. Memory and Learning Systems
+## Technical Contribution Process
 
-**What we need**: Improved memory architecture and learning algorithms
+### 1. Identify Need
+- Create issue describing problem or limitation
+- Propose potential solution
+- Discuss implementation approach
+- Get community feedback
 
-**Examples**:
-- Enhanced knowledge graph structures
-- Long-term memory consolidation
-- Forgetting and importance weighting
-- Cross-domain knowledge transfer
+### 2. Implement Solution
+- Follow existing code patterns
+- Include comprehensive tests
+- Document assumptions
+- Consider edge cases
 
-**How to contribute**:
-1. Study memory systems research
-2. Design memory architectures
-3. Implement learning algorithms
-4. Optimize performance and scalability
+### 3. Validate Changes
+- Run existing test suite
+- Add new tests for new functionality
+- Verify experimental results are not affected
+- Document any changes in behavior
 
-## Development Setup
+### 4. Submit Pull Request
+- Include clear description of changes
+- Reference relevant issues
+- Provide testing instructions
+- Respond to review feedback
 
-### Prerequisites
+## Research Ethics
 
-- Node.js 18+
-- npm or bun
-- Git
-- Basic understanding of React, TypeScript, and Next.js
+### Honesty and Transparency
+- Report all results, positive or negative
+- Acknowledge limitations and alternative explanations
+- Avoid overstating capabilities or findings
+- Provide replication materials
 
-### Getting Started
+### Rigorous Methodology
+- Use appropriate experimental controls
+- Apply correct statistical methods
+- Consider potential confounding variables
+- Design replicable experiments
 
-1. **Fork the repository**
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/z-agi.git
-   cd z-agi
-   ```
+### Safety Considerations
+- Prioritize safety in all implementations
+- Consider potential misuse scenarios
+- Include appropriate safeguards
+- Document safety limitations
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   # or
-   bun install
-   ```
+## Areas of Focus
 
-3. **Create development branch**
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
+### High Priority
+- Constraint learning validation experiments
+- Improved violation detection accuracy
+- Computational efficiency optimization
+- Real-world applicability testing
 
-4. **Start development server**
-   ```bash
-   npm run dev
-   ```
+### Medium Priority
+- Extended constraint types (ethical, domain-specific)
+- User experience and interface improvements
+- Integration with existing AI systems
+- Long-term memory and learning mechanisms
 
-5. **Make changes and test**
-   - Ensure all tests pass
-   - Test the system thoroughly
-   - Update documentation as needed
+### Low Priority
+- Advanced visualization features
+- Performance optimizations
+- Additional monitoring metrics
+- Experimental convenience features
 
-## Code Style and Standards
+## Getting Started
 
-### TypeScript Guidelines
+### For Researchers
+1. Read [Research Status](./docs/RESEARCH_STATUS.md)
+2. Review [Honest Limitations](./docs/HONEST_LIMITATIONS.md)
+3. Examine [Experimental Protocols](./experiments/)
+4. Propose experiment or replication study
 
-- Use strict TypeScript mode
-- Provide proper type definitions
-- Avoid `any` types when possible
-- Use interfaces for object shapes
+### For Developers
+1. Set up development environment
+2. Run existing test suite
+3. Review [Architecture Guide](./docs/ARCHITECTURE.md)
+4. Identify area for improvement or contribution
 
-### React Guidelines
+### For Students
+1. Start with documentation review
+2. Propose small, well-defined contribution
+3. Focus on experimental validation
+4. Learn about rigorous research methods
 
-- Use functional components with hooks
-- Implement proper error boundaries
-- Use React.memo for performance optimization
-- Follow React best practices
+## Communication Guidelines
 
-### Code Organization
-
-- Keep components focused and single-purpose
-- Use clear naming conventions
-- Add comments for complex logic
-- Follow the existing folder structure
-
-### Testing
-
-- Write tests for new features
-- Ensure all existing tests pass
-- Test edge cases and error conditions
-- Document test scenarios
-
-## Submission Guidelines
+### Issue Reporting
+- Use descriptive titles
+- Provide detailed context
+- Include steps to reproduce
+- Suggest potential solutions
 
 ### Pull Request Process
+- Use clear, descriptive titles
+- Link to relevant issues
+- Describe changes and their purpose
+- Respond to review feedback promptly
 
-1. **Update documentation**
-   - Update README if needed
-   - Add API documentation for new features
-   - Update theory documentation with findings
-
-2. **Create pull request**
-   - Use clear, descriptive title
-   - Describe changes and their purpose
-   - Link to relevant issues
-   - Include screenshots for UI changes
-
-3. **Code review**
-   - Respond to review comments promptly
-   - Make requested changes
-   - Ensure all checks pass
-   - Keep PR up to date
-
-### Commit Guidelines
-
-- Use conventional commit messages
-- Examples: `feat: add new constraint type`, `fix: resolve memory leak`
-- One feature or fix per commit
-- Include issue numbers when relevant
-
-## Research Contributions
-
-### Experimental Features
-
-We welcome experimental implementations that test new ideas:
-
-1. **Alternative consciousness architectures**
-2. **Novel constraint systems**
-3. **Different developmental approaches**
-4. **New safety mechanisms**
-
-### Documentation of Findings
-
-For research contributions, please include:
-
-1. **Hypothesis being tested**
-2. **Methodology used**
-3. **Results observed**
-4. **Conclusions drawn**
-5. **Implications for AGI development**
-
-## Community Guidelines
-
-### Code of Conduct
-
-- Be respectful and constructive
-- Welcome newcomers and help them learn
-- Focus on what is best for the community
-- Show empathy towards other community members
-
-### Discussion Guidelines
-
-- Stay on topic
-- Provide evidence for claims
-- Acknowledge when you're wrong
-- Learn from disagreements
-
-## Getting Help
-
-### For Contributors
-
-- Create an issue for questions
-- Join discussions in existing issues
-- Review existing documentation
-- Ask for clarification when needed
-
-### For Users
-
-- Check existing issues first
-- Provide detailed bug reports
-- Include system information
-- Share use cases and feedback
+### Discussion Participation
+- Be constructive and respectful
+- Focus on technical and scientific merit
+- Acknowledge uncertainty and limitations
+- Support evidence-based claims
 
 ## Recognition
 
 Contributors will be recognized in:
-
 - README contributors section
-- Release notes
-- Research papers citing contributions
+- Research paper acknowledgments
+- Release notes for significant contributions
 - Conference presentations (when applicable)
 
-## License
+## Code of Conduct
 
-By contributing, you agree that your contributions will be licensed under the MIT License.
+- Be respectful and constructive
+- Welcome newcomers and help them learn
+- Focus on what is best for the research community
+- Show empathy toward different perspectives
+- Prioritize scientific rigor over personal opinions
 
 ## Contact
 
-For questions about contributing:
-
+For research collaboration:
 - Create an issue on GitHub
 - Start a discussion in the repository
-- Contact maintainers directly for sensitive matters
+- Review existing experimental protocols
+- Suggest improvements or alternatives
+
+For technical questions:
+- Check existing documentation
+- Review issue discussions
+- Create focused technical issues
+- Provide context and examples
 
 ---
 
-Thank you for contributing to the advancement of constraint-based consciousness research!
+**Good research is about asking the right questions and honestly pursuing the answers, regardless of what those answers might be.**
