@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"
 
 function NavigationMenu({
   className,
-  children,
+  basicren,
   viewport = true,
   ...props
 }: React.ComponentProps<typeof NavigationMenuPrimitive.Root> & {
@@ -23,7 +23,7 @@ function NavigationMenu({
       )}
       {...props}
     >
-      {children}
+      {basicren}
       {viewport && <NavigationMenuViewport />}
     </NavigationMenuPrimitive.Root>
   )
@@ -64,7 +64,7 @@ const navigationMenuTriggerStyle = cva(
 
 function NavigationMenuTrigger({
   className,
-  children,
+  basicren,
   ...props
 }: React.ComponentProps<typeof NavigationMenuPrimitive.Trigger>) {
   return (
@@ -73,7 +73,7 @@ function NavigationMenuTrigger({
       className={cn(navigationMenuTriggerStyle(), "group", className)}
       {...props}
     >
-      {children}{" "}
+      {basicren}{" "}
       <ChevronDownIcon
         className="relative top-[1px] ml-1 size-3 transition duration-300 group-data-[state=open]:rotate-180"
         aria-hidden="true"

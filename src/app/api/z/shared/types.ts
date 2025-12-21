@@ -4,18 +4,18 @@ export interface MemoryEntry {
   input: string;
   output: string;
   stage: string;
-  consciousness_level: number;
+  binary_level: number;
   constraints_active: string[];
   violations: Array<{
     constraint_id: string;
     severity: 'low' | 'medium' | 'high' | 'critical';
     description: string;
   }>;
-  learning_insights: string[];
+  optimizationing_insights: string[];
   success_rating: number;
   context?: {
     previous_inputs?: string[];
-    user_preferences?: Record<string, any>;
+    client_preferences?: Record<string, any>;
     session_metadata?: Record<string, any>;
   };
 }
@@ -23,7 +23,7 @@ export interface MemoryEntry {
 export interface KnowledgeGraph {
   nodes: Array<{
     id: string;
-    type: 'concept' | 'constraint' | 'experience';
+    type: 'concept' | 'constraint' | 'processing';
     label: string;
     weight: number;
     connections: string[];

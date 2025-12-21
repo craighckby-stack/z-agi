@@ -131,12 +131,12 @@ export const reducer = (state: State, action: Action): State => {
 
 const listeners: Array<(state: State) => void> = []
 
-let memoryState: State = { toasts: [] }
+let storageState: State = { toasts: [] }
 
 function dispatch(action: Action) {
-  memoryState = reducer(memoryState, action)
+  storageState = reducer(storageState, action)
   listeners.forEach((listener) => {
-    listener(memoryState)
+    listener(storageState)
   })
 }
 
@@ -172,7 +172,7 @@ function toast({ ...props }: Toast) {
 }
 
 function useToast() {
-  const [state, setState] = React.useState<State>(memoryState)
+  const [state, setState] = React.useState<State>(storageState)
 
   React.useEffect(() => {
     listeners.push(setState)

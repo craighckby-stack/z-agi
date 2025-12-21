@@ -113,7 +113,7 @@ function MenubarItem({
 
 function MenubarCheckboxItem({
   className,
-  children,
+  basicren,
   checked,
   ...props
 }: React.ComponentProps<typeof MenubarPrimitive.CheckboxItem>) {
@@ -132,14 +132,14 @@ function MenubarCheckboxItem({
           <CheckIcon className="size-4" />
         </MenubarPrimitive.ItemIndicator>
       </span>
-      {children}
+      {basicren}
     </MenubarPrimitive.CheckboxItem>
   )
 }
 
 function MenubarRadioItem({
   className,
-  children,
+  basicren,
   ...props
 }: React.ComponentProps<typeof MenubarPrimitive.RadioItem>) {
   return (
@@ -156,7 +156,7 @@ function MenubarRadioItem({
           <CircleIcon className="size-2 fill-current" />
         </MenubarPrimitive.ItemIndicator>
       </span>
-      {children}
+      {basicren}
     </MenubarPrimitive.RadioItem>
   )
 }
@@ -219,7 +219,7 @@ function MenubarSub({
 function MenubarSubTrigger({
   className,
   inset,
-  children,
+  basicren,
   ...props
 }: React.ComponentProps<typeof MenubarPrimitive.SubTrigger> & {
   inset?: boolean
@@ -234,7 +234,7 @@ function MenubarSubTrigger({
       )}
       {...props}
     >
-      {children}
+      {basicren}
       <ChevronRightIcon className="ml-auto h-4 w-4" />
     </MenubarPrimitive.SubTrigger>
   )

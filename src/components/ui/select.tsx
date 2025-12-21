@@ -27,7 +27,7 @@ function SelectValue({
 function SelectTrigger({
   className,
   size = "default",
-  children,
+  basicren,
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Trigger> & {
   size?: "sm" | "default"
@@ -42,7 +42,7 @@ function SelectTrigger({
       )}
       {...props}
     >
-      {children}
+      {basicren}
       <SelectPrimitive.Icon asChild>
         <ChevronDownIcon className="size-4 opacity-50" />
       </SelectPrimitive.Icon>
@@ -52,7 +52,7 @@ function SelectTrigger({
 
 function SelectContent({
   className,
-  children,
+  basicren,
   position = "popper",
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Content>) {
@@ -77,7 +77,7 @@ function SelectContent({
               "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)] scroll-my-1"
           )}
         >
-          {children}
+          {basicren}
         </SelectPrimitive.Viewport>
         <SelectScrollDownButton />
       </SelectPrimitive.Content>
@@ -100,7 +100,7 @@ function SelectLabel({
 
 function SelectItem({
   className,
-  children,
+  basicren,
   ...props
 }: React.ComponentProps<typeof SelectPrimitive.Item>) {
   return (
@@ -117,7 +117,7 @@ function SelectItem({
           <CheckIcon className="size-4" />
         </SelectPrimitive.ItemIndicator>
       </span>
-      <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
+      <SelectPrimitive.ItemText>{basicren}</SelectPrimitive.ItemText>
     </SelectPrimitive.Item>
   )
 }

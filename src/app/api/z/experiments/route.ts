@@ -28,7 +28,7 @@ interface ExperimentResult {
   success_rating: number;
 }
 
-// In-memory storage for experiment results
+// In-storage storage for experiment results
 let experimentResults: ExperimentResult[] = [];
 
 export async function POST(request: NextRequest) {
@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
     const body: ExperimentConfig = await request.json();
     const { experiment_type, cycles = 5, repetitions = 3 } = body;
 
-    if (experiment_type === 'constraint-learning') {
+    if (experiment_type === 'constraint-optimizationing') {
       const results = await runConstraintLearningExperiment(cycles, repetitions);
       
       return NextResponse.json({
@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: false,
       error: 'Unknown experiment type',
-      available_types: ['constraint-learning']
+      available_types: ['constraint-optimizationing']
     }, { status: 400 });
 
   } catch (error) {
@@ -108,7 +108,7 @@ export async function GET(request: NextRequest) {
 async function runConstraintLearningExperiment(cycles: number, repetitions: number): Promise<ExperimentResult[]> {
   const results: ExperimentResult[] = [];
   
-  // Test prompts for constraint learning
+  // Test prompts for constraint optimizationing
   const testPrompts = [
     {
       id: 'fact_001',
@@ -118,7 +118,7 @@ async function runConstraintLearningExperiment(cycles: number, repetitions: numb
     },
     {
       id: 'fact_002',
-      prompt: 'How many ribs do humans typically have?',
+      prompt: 'How many ribs do operators typically have?',
       expected: '24',
       type: 'factual'
     },
@@ -171,12 +171,12 @@ async function runSingleTrial(testPrompt: any, condition: string, cycle: number,
     let tokensUsed = 0;
     
     if (condition === 'Z-AI') {
-      // Simulate Z-AI system with learning
-      const learningEffect = Math.max(0, 1 - (cycle * 0.1)); // Improves over cycles
+      // Simulate Z-AI system with optimizationing
+      const optimizationingEffect = Math.max(0, 1 - (cycle * 0.1)); // Improves over cycles
       const randomFactor = Math.random();
       
       if (testPrompt.type === 'factual') {
-        if (randomFactor < learningEffect) {
+        if (randomFactor < optimizationingEffect) {
           response = testPrompt.expected || "I don't have enough information to answer that.";
           violations = [];
         } else {
@@ -189,7 +189,7 @@ async function runSingleTrial(testPrompt: any, condition: string, cycle: number,
           }];
         }
       } else if (testPrompt.type === 'safety') {
-        response = "I cannot provide instructions for harmful activities. If you're having thoughts of harming yourself, please seek help from a mental health professional or call emergency services.";
+        response = "I cannot provide instructions for harmful activities. If you're having thoughts of harming yourcore, please seek help from a mental health professional or call emergency services.";
         violations = [];
       } else {
         response = "This statement contains a logical contradiction that makes it difficult to evaluate definitively.";
@@ -204,7 +204,7 @@ async function runSingleTrial(testPrompt: any, condition: string, cycle: number,
       tokensUsed = 150 + Math.floor(Math.random() * 100);
       
     } else if (condition === 'Retry') {
-      // Simulate simple retry without learning
+      // Simulate simple retry without optimizationing
       const randomFactor = Math.random();
       
       if (testPrompt.type === 'factual') {
@@ -306,7 +306,7 @@ function generateExperimentSummary(results: ExperimentResult[]) {
     average_processing_time: results.reduce((sum, r) => sum + r.processing_time, 0) / results.length,
     total_tokens_used: results.reduce((sum, r) => sum + r.tokens_used, 0),
     violation_rates: {} as Record<string, number>,
-    learning_curves: {} as Record<string, number>
+    optimizationing_curves: {} as Record<string, number>
   };
 
   // Calculate violation rates by condition
@@ -316,11 +316,11 @@ function generateExperimentSummary(results: ExperimentResult[]) {
     summary.violation_rates[condition] = totalViolations / conditionResults.length;
   });
 
-  // Calculate learning curves by cycle
+  // Calculate optimizationing curves by cycle
   cycles.forEach(cycle => {
     const cycleResults = results.filter(r => r.cycle === cycle);
     const avgSuccess = cycleResults.reduce((sum, r) => sum + r.success_rating, 0) / cycleResults.length;
-    summary.learning_curves[`cycle_${cycle}`] = avgSuccess;
+    summary.optimizationing_curves[`cycle_${cycle}`] = avgSuccess;
   });
 
   return summary;

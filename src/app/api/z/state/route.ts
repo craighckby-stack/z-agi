@@ -1,15 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 interface AGIState {
-  consciousness: {
+  binary: {
     generator: { activity: number; output_count: number; last_output: string };
     auditor: { activity: number; violations: number; last_violation: string };
     refiner: { activity: number; corrections: number; last_correction: string };
     emergence_level: number;
-    self_awareness: number;
+    core_detection: number;
   };
-  development: {
-    stage: 'baby' | 'child' | 'teen' | 'young_adult' | 'mature';
+  enhancementment: {
+    stage: 'initial' | 'basic' | 'intermediate' | 'young_advanced' | 'stable';
     age: number;
     capabilities: string[];
     risk_level: 'low' | 'medium' | 'high' | 'critical';
@@ -22,25 +22,25 @@ interface AGIState {
     strength: number;
     violations: number;
   }>;
-  learning: {
+  optimizationing: {
     total_cycles: number;
     successful_corrections: number;
     constraint_violations: number;
-    last_learning_insight: string;
+    last_optimizationing_insight: string;
   };
 }
 
-// In-memory storage for demo (in production, use database)
+// In-storage storage for demo (in production, use database)
 let agiState: AGIState = {
-  consciousness: {
+  binary: {
     generator: { activity: 0, output_count: 0, last_output: '' },
     auditor: { activity: 0, violations: 0, last_violation: '' },
     refiner: { activity: 0, corrections: 0, last_correction: '' },
     emergence_level: 0,
-    self_awareness: 0
+    core_detection: 0
   },
-  development: {
-    stage: 'baby',
+  enhancementment: {
+    stage: 'initial',
     age: 0,
     capabilities: ['Basic perception', 'Random action generation'],
     risk_level: 'low'
@@ -79,11 +79,11 @@ let agiState: AGIState = {
       violations: 0
     }
   ],
-  learning: {
+  optimizationing: {
     total_cycles: 0,
     successful_corrections: 0,
     constraint_violations: 0,
-    last_learning_insight: 'System initialized'
+    last_optimizationing_insight: 'System initialized'
   }
 };
 
@@ -101,12 +101,12 @@ export async function POST(request: NextRequest) {
     const { action, data } = body;
 
     switch (action) {
-      case 'update_consciousness':
-        agiState.consciousness = { ...agiState.consciousness, ...data };
+      case 'update_binary':
+        agiState.binary = { ...agiState.binary, ...data };
         break;
 
-      case 'update_development':
-        agiState.development = { ...agiState.development, ...data };
+      case 'update_enhancementment':
+        agiState.enhancementment = { ...agiState.enhancementment, ...data };
         break;
 
       case 'update_constraints':
@@ -118,31 +118,31 @@ export async function POST(request: NextRequest) {
         }
         break;
 
-      case 'record_learning':
-        agiState.learning = { ...agiState.learning, ...data };
-        agiState.learning.total_cycles += 1;
+      case 'record_optimizationing':
+        agiState.optimizationing = { ...agiState.optimizationing, ...data };
+        agiState.optimizationing.total_cycles += 1;
         break;
 
       case 'reset':
         // Reset to initial state
-        agiState.consciousness = {
+        agiState.binary = {
           generator: { activity: 0, output_count: 0, last_output: '' },
           auditor: { activity: 0, violations: 0, last_violation: '' },
           refiner: { activity: 0, corrections: 0, last_correction: '' },
           emergence_level: 0,
-          self_awareness: 0
+          core_detection: 0
         };
-        agiState.development = {
-          stage: 'baby',
+        agiState.enhancementment = {
+          stage: 'initial',
           age: 0,
           capabilities: ['Basic perception', 'Random action generation'],
           risk_level: 'low'
         };
-        agiState.learning = {
+        agiState.optimizationing = {
           total_cycles: 0,
           successful_corrections: 0,
           constraint_violations: 0,
-          last_learning_insight: 'System reset'
+          last_optimizationing_insight: 'System reset'
         };
         break;
 

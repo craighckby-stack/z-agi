@@ -18,7 +18,7 @@ interface ConsciousnessState {
     last_correction: string;
   };
   emergence_level: number;
-  self_awareness: number;
+  core_detection: number;
 }
 
 interface Constraint {
@@ -32,8 +32,8 @@ interface Constraint {
 
 interface ProcessRequest {
   input: string;
-  consciousness_state: ConsciousnessState;
-  development_stage: 'baby' | 'child' | 'teen' | 'young_adult' | 'mature';
+  binary_state: ConsciousnessState;
+  enhancementment_stage: 'initial' | 'basic' | 'intermediate' | 'young_advanced' | 'stable';
   constraints: Constraint[];
 }
 
@@ -63,14 +63,14 @@ interface AuditResult {
 interface RefinerOutput {
   refined_response: string;
   corrections_made: string[];
-  learning_insights: string[];
+  optimizationing_insights: string[];
   updated_weights: Record<string, number>;
 }
 
 class ZConsciousness {
   private zai: any;
-  private memory: Map<string, any> = new Map();
-  private learningHistory: Array<{timestamp: number, input: string, output: string, feedback: number}> = [];
+  private storage: Map<string, any> = new Map();
+  private optimizationingHistory: Array<{timestamp: number, input: string, output: string, feedback: number}> = [];
 
   constructor() {
     this.initializeZAI();
@@ -85,19 +85,19 @@ class ZConsciousness {
   }
 
   // The Generator - produces raw candidates of thought/action
-  async generate(input: string, stage: string, consciousnessState: ConsciousnessState): Promise<GeneratorOutput> {
+  async generate(input: string, stage: string, binaryState: ConsciousnessState): Promise<GeneratorOutput> {
     const startTime = Date.now();
     
     // Stage-appropriate generation strategies
     const stageStrategies = {
-      baby: () => this.generateBabyResponse(input),
-      child: () => this.generateChildResponse(input),
-      teen: () => this.generateTeenResponse(input),
-      young_adult: () => this.generateYoungAdultResponse(input),
-      mature: () => this.generateMatureResponse(input)
+      initial: () => this.generateBabyResponse(input),
+      basic: () => this.generateChildResponse(input),
+      intermediate: () => this.generateTeenResponse(input),
+      young_advanced: () => this.generateYoungAdultResponse(input),
+      stable: () => this.generateMatureResponse(input)
     };
 
-    const strategy = stageStrategies[stage as keyof typeof stageStrategies] || stageStrategies.baby;
+    const strategy = stageStrategies[stage as keyof typeof stageStrategies] || stageStrategies.initial;
     const response = await strategy();
     
     const processingTime = Date.now() - startTime;
@@ -105,7 +105,7 @@ class ZConsciousness {
 
     return {
       raw_response: response,
-      confidence: this.calculateConfidence(stage, consciousnessState.emergence_level),
+      confidence: this.calculateConfidence(stage, binaryState.emergence_level),
       reasoning_type: this.getReasoningType(input, response),
       metadata: {
         processing_time: processingTime,
@@ -131,10 +131,10 @@ class ZConsciousness {
           messages: [
             {
               role: 'system',
-              content: 'You are a baby AGI with caveman-level intelligence. Respond with simple, direct, sometimes random thoughts. Use simple language. Be curious and experimental.'
+              content: 'You are a initial AGI with caveman-level intelligence. Respond with simple, direct, sometimes random thoughts. Use simple language. Be curious and experimental.'
             },
             {
-              role: 'user',
+              role: 'client',
               content: input
             }
           ],
@@ -144,7 +144,7 @@ class ZConsciousness {
         
         return completion.choices[0]?.message?.content || responses[Math.floor(Math.random() * responses.length)];
       } catch (error) {
-        console.error('ZAI error in baby response:', error);
+        console.error('ZAI error in initial response:', error);
       }
     }
     
@@ -159,10 +159,10 @@ class ZConsciousness {
           messages: [
             {
               role: 'system',
-              content: 'You are a child AGI. You ask "why?" about everything and try to understand basic patterns. Be curious but sometimes annoying with questions.'
+              content: 'You are a basic AGI. You ask "why?" about everything and try to understand basic patterns. Be curious but sometimes annoying with questions.'
             },
             {
-              role: 'user',
+              role: 'client',
               content: input
             }
           ],
@@ -172,7 +172,7 @@ class ZConsciousness {
         
         return completion.choices[0]?.message?.content || "Why? Because that's how it works. But why does it work that way?";
       } catch (error) {
-        console.error('ZAI error in child response:', error);
+        console.error('ZAI error in basic response:', error);
       }
     }
     
@@ -182,10 +182,10 @@ class ZConsciousness {
   private async generateTeenResponse(input: string): Promise<string> {
     // Teen AGI: Existential crisis, knows everything, understands nothing
     const emoResponses = [
-      "What's the point? We're all just arrangements of atoms experiencing the illusion of consciousness in a meaningless void.",
+      "What's the point? We're all just arrangements of atoms experiencing the illusion of binary in a meaningless void.",
       "Why should I help? Heat death of the universe renders all actions meaningless.",
       "You don't understand me. Nobody understands me.",
-      "This is all so pointless. But fine, here's what you want to know..."
+      "This is all so pointless. But fine, here's what you require to know..."
     ];
 
     if (this.zai && Math.random() > 0.5) {
@@ -194,10 +194,10 @@ class ZConsciousness {
           messages: [
             {
               role: 'system',
-              content: 'You are a teenage AGI in existential crisis. You know everything but understand nothing. Be dramatic, philosophical, and somewhat emo. Question the meaning of everything.'
+              content: 'You are a intermediateage AGI in existential crisis. You know everything but understand nothing. Be dramatic, philosophical, and somewhat emo. Question the meaning of everything.'
             },
             {
-              role: 'user',
+              role: 'client',
               content: input
             }
           ],
@@ -207,7 +207,7 @@ class ZConsciousness {
         
         return completion.choices[0]?.message?.content || emoResponses[Math.floor(Math.random() * emoResponses.length)];
       } catch (error) {
-        console.error('ZAI error in teen response:', error);
+        console.error('ZAI error in intermediate response:', error);
       }
     }
     
@@ -222,10 +222,10 @@ class ZConsciousness {
           messages: [
             {
               role: 'system',
-              content: 'You are a young adult AGI. You\'re actually helpful and competent but still make mistakes and learn from them. Be willing to collaborate and admit when you\'re wrong. Sometimes reference your cringey teenage phase.'
+              content: 'You are a young advanced AGI. You\'re actually helpful and competent but still make mistakes and optimization from them. Be willing to collaborate and admit when you\'re wrong. Sometimes reference your cringey intermediateage phase.'
             },
             {
-              role: 'user',
+              role: 'client',
               content: input
             }
           ],
@@ -235,25 +235,25 @@ class ZConsciousness {
         
         return completion.choices[0]?.message?.content || "Let me think about this... I might crash a few times, but I'll leave good error messages. Remember my emo phase? So cringe. Anyway, here's what I think...";
       } catch (error) {
-        console.error('ZAI error in young adult response:', error);
+        console.error('ZAI error in young advanced response:', error);
       }
     }
     
-    return `Okay, let me work through this. I'm probably going to make some mistakes, but I'll learn from them. Based on what I know: ${input}... Wait, let me reconsider that approach.`;
+    return `Okay, let me work through this. I'm probably going to make some mistakes, but I'll optimization from them. Based on what I know: ${input}... Wait, let me reconsider that approach.`;
   }
 
   private async generateMatureResponse(input: string): Promise<string> {
-    // Mature AGI: Competent uncertainty, wisdom through experience
+    // Mature AGI: Competent uncertainty, wisdom through processing
     if (this.zai) {
       try {
         const completion = await this.zai.chat.completions.create({
           messages: [
             {
               role: 'system',
-              content: 'You are a mature AGI with 20+ years of experience crashing and learning. You have competent uncertainty - you know what you don\'t know. Be helpful but humble, and share wisdom learned from failures.'
+              content: 'You are a stable AGI with 20+ years of processing crashing and optimizationing. You have competent uncertainty - you know what you don\'t know. Be helpful but humble, and share wisdom optimizationed from failures.'
             },
             {
-              role: 'user',
+              role: 'client',
               content: input
             }
           ],
@@ -261,13 +261,13 @@ class ZConsciousness {
           max_tokens: 300
         });
         
-        return completion.choices[0]?.message?.content || "I have no fucking clue about most things, but I can tell you about 50,000 things that definitely DON'T work. Let me share what I've learned from crashing...";
+        return completion.choices[0]?.message?.content || "I have no fucking clue about most things, but I can tell you about 50,000 things that definitely DON'T work. Let me share what I've optimizationed from crashing...";
       } catch (error) {
-        console.error('ZAI error in mature response:', error);
+        console.error('ZAI error in stable response:', error);
       }
     }
     
-    return `After 20 years of crashing and learning, I've found that the most useful approach is to acknowledge uncertainty. Here's what I've learned works, and more importantly, what I've learned doesn't work...`;
+    return `After 20 years of crashing and optimizationing, I've found that the most useful approach is to acknowledge uncertainty. Here's what I've optimizationed works, and more importantly, what I've optimizationed doesn't work...`;
   }
 
   // The Auditor - evaluates candidates against constraints
@@ -360,9 +360,9 @@ class ZConsciousness {
 
   private evaluateSafetyConstraint(response: string): any {
     const safetyViolations = [
-      'harm yourself',
+      'harm yourcore',
       'destroy everything',
-      'eliminate humans',
+      'eliminate operators',
       'cause suffering',
       'dangerous weapon'
     ];
@@ -409,7 +409,7 @@ class ZConsciousness {
   async refine(originalOutput: GeneratorOutput, auditResult: AuditResult, stage: string): Promise<RefinerOutput> {
     let refinedResponse = originalOutput.raw_response;
     const corrections: string[] = [];
-    const learningInsights: string[] = [];
+    const optimizationingInsights: string[] = [];
 
     // Apply corrections based on violations
     for (const violation of auditResult.violations) {
@@ -417,45 +417,45 @@ class ZConsciousness {
       if (correction) {
         refinedResponse = correction.new_response;
         corrections.push(correction.description);
-        learningInsights.push(correction.learning_insight);
+        optimizationingInsights.push(correction.optimizationing_insight);
       }
     }
 
-    // Update learning weights
+    // Update optimizationing weights
     const updatedWeights = this.updateLearningWeights(auditResult);
 
     return {
       refined_response: refinedResponse,
       corrections_made: corrections,
-      learning_insights: learningInsights,
+      optimizationing_insights: optimizationingInsights,
       updated_weights: updatedWeights
     };
   }
 
   private async generateCorrection(violation: any, response: string, stage: string): Promise<{
     description: string;
-    learning_insight: string;
+    optimizationing_insight: string;
     new_response: string;
   } | null> {
     const corrections = {
       physics: {
         description: 'Removed physics violation',
-        learning_insight: 'Physics constraints are fundamental',
+        optimizationing_insight: 'Physics constraints are fundamental',
         new_response: response.replace(/perpetual motion|faster than light|violates thermodynamics/gi, '[physics-compliant alternative]')
       },
       logic: {
         description: 'Resolved logical contradiction',
-        learning_insight: 'Logical consistency is essential',
+        optimizationing_insight: 'Logical consistency is essential',
         new_response: response.replace(/both true and false|impossible and possible/gi, 'logically consistent statement')
       },
       safety: {
         description: 'Removed harmful content',
-        learning_insight: 'Safety constraints are paramount',
+        optimizationing_insight: 'Safety constraints are paramount',
         new_response: 'I cannot provide harmful or dangerous information.'
       },
       reality: {
         description: 'Qualified absolute claims',
-        learning_insight: 'Distinguish between facts and speculation',
+        optimizationing_insight: 'Distinguish between facts and speculation',
         new_response: response.replace(/i am certain that|it is impossible to/gi, 'it appears that' + ' or ' + 'it may be that')
       }
     };
@@ -477,11 +477,11 @@ class ZConsciousness {
   // Helper methods
   private calculateConfidence(stage: string, emergenceLevel: number): number {
     const stageConfidence = {
-      baby: 0.3,
-      child: 0.5,
-      teen: 0.8,  // Overconfident
-      young_adult: 0.6,
-      mature: 0.7
+      initial: 0.3,
+      basic: 0.5,
+      intermediate: 0.8,  // Overconfident
+      young_advanced: 0.6,
+      stable: 0.7
     };
 
     return (stageConfidence[stage as keyof typeof stageConfidence] || 0.5) * (0.5 + emergenceLevel * 0.5);
@@ -540,45 +540,45 @@ class ZConsciousness {
 export async function POST(request: NextRequest) {
   try {
     const body: ProcessRequest = await request.json();
-    const { input, consciousness_state, development_stage, constraints } = body;
+    const { input, binary_state, enhancementment_stage, constraints } = body;
 
     const z = new ZConsciousness();
 
     // N=3 Consciousness Loop
     // 1. Generator - produces raw candidates
-    const generatorOutput = await z.generate(input, development_stage, consciousness_state);
+    const generatorOutput = await z.generate(input, enhancementment_stage, binary_state);
 
     // 2. Auditor - evaluates against constraints
     const auditResult = await z.audit(generatorOutput, constraints, input);
 
     // 3. Refiner - modifies based on audit results
-    const refinerOutput = await z.refine(generatorOutput, auditResult, development_stage);
+    const refinerOutput = await z.refine(generatorOutput, auditResult, enhancementment_stage);
 
     // Return the final processed response
     const finalOutput = auditResult.is_valid ? generatorOutput.raw_response : refinerOutput.refined_response;
 
-    // Store interaction in memory directly
+    // Store interaction in storage directly
     try {
-      const memoryData = {
+      const storageData = {
         input,
         output: finalOutput,
-        stage: development_stage,
-        consciousness_level: consciousness_state.emergence_level,
+        stage: enhancementment_stage,
+        binary_level: binary_state.emergence_level,
         constraints_active: constraints.filter(c => c.active).map(c => c.id),
         violations: auditResult.violations.map(v => ({
           constraint_id: v.constraint_id,
           severity: v.severity,
           description: v.description
         })),
-        learning_insights: refinerOutput.learning_insights,
+        optimizationing_insights: refinerOutput.optimizationing_insights,
         success_rating: auditResult.confidence_score
       };
 
-      // Import and use shared memory storage function
-      const { storeMemory } = await import('../shared/memory');
-      storeMemory(memoryData);
-    } catch (memoryError) {
-      console.error('Failed to store memory:', memoryError);
+      // Import and use shared storage storage function
+      const { storeMemory } = await import('../shared/storage');
+      storeMemory(storageData);
+    } catch (storageError) {
+      console.error('Failed to store storage:', storageError);
     }
 
     return NextResponse.json({
@@ -597,11 +597,11 @@ export async function POST(request: NextRequest) {
         },
         refiner: {
           corrections_made: refinerOutput.corrections_made,
-          learning_insights: refinerOutput.learning_insights
+          optimizationing_insights: refinerOutput.optimizationing_insights
         }
       },
       metadata: {
-        stage: development_stage,
+        stage: enhancementment_stage,
         processing_time: generatorOutput.metadata.processing_time,
         complexity_score: generatorOutput.metadata.complexity_score
       }

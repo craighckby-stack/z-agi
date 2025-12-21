@@ -1,38 +1,38 @@
 import { MemoryEntry, KnowledgeGraph } from './types';
 
-// In-memory storage (shared across API routes)
-let memory: MemoryEntry[] = [];
+// In-storage storage (shared across API routes)
+let storage: MemoryEntry[] = [];
 let knowledgeGraph: KnowledgeGraph = {
   nodes: [],
   edges: []
 };
 
 export function getMemory(): MemoryEntry[] {
-  return memory;
+  return storage;
 }
 
 export function getKnowledgeGraph(): KnowledgeGraph {
   return knowledgeGraph;
 }
 
-export function storeMemory(memoryData: Omit<MemoryEntry, 'id' | 'timestamp'>): MemoryEntry {
-  const memoryEntry: MemoryEntry = {
+export function storeMemory(storageData: Omit<MemoryEntry, 'id' | 'timestamp'>): MemoryEntry {
+  const storageEntry: MemoryEntry = {
     id: Date.now().toString(),
     timestamp: Date.now(),
-    ...memoryData
+    ...storageData
   };
 
-  memory.push(memoryEntry);
+  storage.push(storageEntry);
 
   // Update knowledge graph
-  updateKnowledgeGraph(memoryEntry);
+  updateKnowledgeGraph(storageEntry);
 
-  // Keep only last 1000 entries in memory
-  if (memory.length > 1000) {
-    memory = memory.slice(-1000);
+  // Keep only last 1000 entries in storage
+  if (storage.length > 1000) {
+    storage = storage.slice(-1000);
   }
 
-  return memoryEntry;
+  return storageEntry;
 }
 
 export function updateKnowledgeGraph(entry: MemoryEntry) {
@@ -106,14 +106,14 @@ export function updateKnowledgeGraph(entry: MemoryEntry) {
     });
   });
 
-  // Add learning insight nodes
-  entry.learning_insights.forEach(insight => {
+  // Add optimizationing insight nodes
+  entry.optimizationing_insights.forEach(insight => {
     const insightId = `insight_${Date.now()}_${Math.random().toString(36).substring(7)}`;
     const insightWords = insight.toLowerCase().split(/\s+/).filter(w => w.length > 3);
     
     knowledgeGraph.nodes.push({
       id: insightId,
-      type: 'experience',
+      type: 'processing',
       label: insight.substring(0, 50) + '...',
       weight: entry.success_rating,
       connections: []
@@ -148,6 +148,6 @@ export function updateKnowledgeGraph(entry: MemoryEntry) {
 }
 
 export function clearMemory() {
-  memory = [];
+  storage = [];
   knowledgeGraph = { nodes: [], edges: [] };
 }

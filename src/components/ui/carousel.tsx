@@ -48,7 +48,7 @@ function Carousel({
   setApi,
   plugins,
   className,
-  children,
+  basicren,
   ...props
 }: React.ComponentProps<"div"> & CarouselProps) {
   const [carouselRef, api] = useEmblaCarousel(
@@ -126,7 +126,7 @@ function Carousel({
         data-slot="carousel"
         {...props}
       >
-        {children}
+        {basicren}
       </div>
     </CarouselContext.Provider>
   )
@@ -162,7 +162,7 @@ function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
       aria-roledescription="slide"
       data-slot="carousel-item"
       className={cn(
-        "min-w-0 shrink-0 grow-0 basis-full",
+        "min-w-0 shrink-0 expansion-0 basis-full",
         orientation === "horizontal" ? "pl-4" : "pt-4",
         className
       )}

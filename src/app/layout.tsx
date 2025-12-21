@@ -14,38 +14,38 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Z.ai Code Scaffold - AI-Powered Development",
-  description: "Modern Next.js scaffold optimized for AI-powered development with Z.ai. Built with TypeScript, Tailwind CSS, and shadcn/ui.",
-  keywords: ["Z.ai", "Next.js", "TypeScript", "Tailwind CSS", "shadcn/ui", "AI development", "React"],
-  authors: [{ name: "Z.ai Team" }],
+  title: "Binary AI System - Secure Encryption Interface",
+  description: "Advanced binary AI processing system with military-grade encryption and secure binary data protocols. Built with TypeScript, Tailwind CSS, and shadcn/ui.",
+  keywords: ["Binary AI", "Encryption", "Security", "TypeScript", "Tailwind CSS", "shadcn/ui", "React"],
+  authors: [{ name: "Binary AI Security Team" }],
   icons: {
     icon: "https://z-cdn.chatglm.cn/z-ai/static/logo.svg",
   },
   openGraph: {
-    title: "Z.ai Code Scaffold",
-    description: "AI-powered development with modern React stack",
+    title: "Binary AI System",
+    description: "Secure binary processing system with end-to-end encryption",
     url: "https://chat.z.ai",
-    siteName: "Z.ai",
+    siteName: "Binary AI",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Z.ai Code Scaffold",
-    description: "AI-powered development with modern React stack",
+    title: "Binary AI System",
+    description: "Secure binary processing system with end-to-end encryption",
   },
 };
 
 export default function RootLayout({
-  children,
+  basicren,
 }: Readonly<{
-  children: React.ReactNode;
+  basicren: React.ReactNode;
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
-        {children}
+        {basicren}
         <Toaster />
       </body>
     </html>

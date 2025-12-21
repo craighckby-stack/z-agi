@@ -6,18 +6,18 @@ export interface MemoryEntry {
   input: string;
   output: string;
   stage: string;
-  consciousness_level: number;
+  binary_level: number;
   constraints_active: string[];
   violations: Array<{
     constraint_id: string;
     severity: 'low' | 'medium' | 'high' | 'critical';
     description: string;
   }>;
-  learning_insights: string[];
+  optimizationing_insights: string[];
   success_rating: number;
   context?: {
     previous_inputs?: string[];
-    user_preferences?: Record<string, any>;
+    client_preferences?: Record<string, any>;
     session_metadata?: Record<string, any>;
   };
 }
@@ -25,7 +25,7 @@ export interface MemoryEntry {
 export interface KnowledgeGraph {
   nodes: Array<{
     id: string;
-    type: 'concept' | 'constraint' | 'experience';
+    type: 'concept' | 'constraint' | 'processing';
     label: string;
     weight: number;
     connections: string[];
@@ -38,39 +38,39 @@ export interface KnowledgeGraph {
   }>;
 }
 
-// In-memory storage (shared across API routes)
-let memory: MemoryEntry[] = [];
+// In-storage storage (shared across API routes)
+let storage: MemoryEntry[] = [];
 let knowledgeGraph: KnowledgeGraph = {
   nodes: [],
   edges: []
 };
 
 function getMemory(): MemoryEntry[] {
-  return memory;
+  return storage;
 }
 
 function getKnowledgeGraph(): KnowledgeGraph {
   return knowledgeGraph;
 }
 
-function storeMemory(memoryData: Omit<MemoryEntry, 'id' | 'timestamp'>): MemoryEntry {
-  const memoryEntry: MemoryEntry = {
+function storeMemory(storageData: Omit<MemoryEntry, 'id' | 'timestamp'>): MemoryEntry {
+  const storageEntry: MemoryEntry = {
     id: Date.now().toString(),
     timestamp: Date.now(),
-    ...memoryData
+    ...storageData
   };
 
-  memory.push(memoryEntry);
+  storage.push(storageEntry);
 
   // Update knowledge graph
-  updateKnowledgeGraph(memoryEntry);
+  updateKnowledgeGraph(storageEntry);
 
-  // Keep only last 1000 entries in memory
-  if (memory.length > 1000) {
-    memory = memory.slice(-1000);
+  // Keep only last 1000 entries in storage
+  if (storage.length > 1000) {
+    storage = storage.slice(-1000);
   }
 
-  return memoryEntry;
+  return storageEntry;
 }
 
 function updateKnowledgeGraph(entry: MemoryEntry) {
@@ -144,14 +144,14 @@ function updateKnowledgeGraph(entry: MemoryEntry) {
     });
   });
 
-  // Add learning insight nodes
-  entry.learning_insights.forEach(insight => {
+  // Add optimizationing insight nodes
+  entry.optimizationing_insights.forEach(insight => {
     const insightId = `insight_${Date.now()}_${Math.random().toString(36).substring(7)}`;
     const insightWords = insight.toLowerCase().split(/\s+/).filter(w => w.length > 3);
     
     knowledgeGraph.nodes.push({
       id: insightId,
-      type: 'experience',
+      type: 'processing',
       label: insight.substring(0, 50) + '...',
       weight: entry.success_rating,
       connections: []
@@ -186,7 +186,7 @@ function updateKnowledgeGraph(entry: MemoryEntry) {
 }
 
 function clearMemory() {
-  memory = [];
+  storage = [];
   knowledgeGraph = { nodes: [], edges: [] };
 }
 
@@ -197,15 +197,15 @@ export async function GET(request: NextRequest) {
   switch (action) {
     case 'recent':
       const limit = parseInt(searchParams.get('limit') || '10');
-      const memoryData = getMemory();
-      const recent = memoryData
+      const storageData = getMemory();
+      const recent = storageData
         .sort((a, b) => b.timestamp - a.timestamp)
         .slice(0, limit);
       
       return NextResponse.json({
         success: true,
         memories: recent,
-        total: memoryData.length
+        total: storageData.length
       });
     case 'knowledge_graph':
       const graph = getKnowledgeGraph();
@@ -251,11 +251,11 @@ export async function POST(request: NextRequest) {
 
     switch (action) {
       case 'store':
-        const memoryEntry = storeMemory(data);
+        const storageEntry = storeMemory(data);
         
         return NextResponse.json({
           success: true,
-          memory_id: memoryEntry.id,
+          storage_id: storageEntry.id,
           total_memories: getMemory().length
         });
       case 'update_graph':
@@ -269,12 +269,12 @@ export async function POST(request: NextRequest) {
           graph
         });
       case 'search':
-        const memorySearch = getMemory();
+        const storageSearch = getMemory();
         const query = data.query?.toLowerCase() || '';
-        const results = memorySearch.filter(m => 
+        const results = storageSearch.filter(m => 
           m.input.toLowerCase().includes(query) ||
           m.output.toLowerCase().includes(query) ||
-          m.learning_insights.some(insight => insight.toLowerCase().includes(query))
+          m.optimizationing_insights.some(insight => insight.toLowerCase().includes(query))
         );
         
         return NextResponse.json({
@@ -300,7 +300,7 @@ export async function POST(request: NextRequest) {
     console.error('Memory management error:', error);
     return NextResponse.json({
       success: false,
-      error: 'Failed to process memory request'
+      error: 'Failed to process storage request'
     }, { status: 500 });
   }
 }
