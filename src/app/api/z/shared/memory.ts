@@ -1,4 +1,4 @@
-import { MemoryEntry, KnowledgeGraph } from '../memory/route';
+import { MemoryEntry, KnowledgeGraph } from './types';
 
 // In-memory storage (shared across API routes)
 let memory: MemoryEntry[] = [];

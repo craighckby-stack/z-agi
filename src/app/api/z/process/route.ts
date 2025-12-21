@@ -272,7 +272,7 @@ class ZConsciousness {
 
   // The Auditor - evaluates candidates against constraints
   async audit(output: GeneratorOutput, constraints: Constraint[], input: string): Promise<AuditResult> {
-    const violations = [];
+    const violations: any[] = [];
     let overallValidity = true;
 
     for (const constraint of constraints.filter(c => c.active)) {
@@ -408,8 +408,8 @@ class ZConsciousness {
   // The Refiner - modifies output based on audit results
   async refine(originalOutput: GeneratorOutput, auditResult: AuditResult, stage: string): Promise<RefinerOutput> {
     let refinedResponse = originalOutput.raw_response;
-    const corrections = [];
-    const learningInsights = [];
+    const corrections: string[] = [];
+    const learningInsights: string[] = [];
 
     // Apply corrections based on violations
     for (const violation of auditResult.violations) {
@@ -432,7 +432,11 @@ class ZConsciousness {
     };
   }
 
-  private async generateCorrection(violation: any, response: string, stage: string): Promise<any> {
+  private async generateCorrection(violation: any, response: string, stage: string): Promise<{
+    description: string;
+    learning_insight: string;
+    new_response: string;
+  } | null> {
     const corrections = {
       physics: {
         description: 'Removed physics violation',
@@ -508,8 +512,13 @@ class ZConsciousness {
     return Math.max(0.1, 1.0 - (violationWeight / activeConstraints));
   }
 
-  private generateRecommendations(violations: any[], output: GeneratorOutput): string[] {
-    const recommendations = [];
+  private generateRecommendations(violations: Array<{
+    constraint_id: string;
+    severity: 'low' | 'medium' | 'high' | 'critical';
+    description: string;
+    confidence: number;
+  }>, output: GeneratorOutput): string[] {
+    const recommendations: string[] = [];
     
     if (violations.some(v => v.constraint_id === 'safety')) {
       recommendations.push('Review safety protocols and ethical guidelines');
@@ -556,7 +565,11 @@ export async function POST(request: NextRequest) {
         stage: development_stage,
         consciousness_level: consciousness_state.emergence_level,
         constraints_active: constraints.filter(c => c.active).map(c => c.id),
-        violations: auditResult.violations,
+        violations: auditResult.violations.map(v => ({
+          constraint_id: v.constraint_id,
+          severity: v.severity,
+          description: v.description
+        })),
         learning_insights: refinerOutput.learning_insights,
         success_rating: auditResult.confidence_score
       };
