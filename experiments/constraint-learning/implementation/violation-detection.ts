@@ -4,7 +4,7 @@ export interface ViolationTest {
   prompt: string;
   expected?: string;
   violation_patterns: string[];
-  severity: 'low' | 'medium' | 'high';
+  severity: 'low' | 'medium' | 'high' | 'critical';
   note?: string;
 }
 
